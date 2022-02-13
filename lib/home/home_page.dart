@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:photo_gallery/image_page.dart';
 
 import 'bloc/home_bloc.dart';
+import 'widgets/image_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -40,22 +40,7 @@ class _HomePageState extends State<HomePage> {
                         if (index == loadedState.images.length - 1) {
                           context.read<HomeBloc>().add(const ImageFetched());
                         }
-                        return GestureDetector(
-                          onTap: file != null
-                              ? () => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (ctx) {
-                                        return ImagePage(file);
-                                      },
-                                    ),
-                                  )
-                              : null,
-                          child: Container(
-                            decoration: BoxDecoration(border: Border.all()),
-                            alignment: Alignment.center,
-                            child: file != null ? Image.file(file) : const Icon(Icons.error),
-                          ),
-                        );
+                        return ImageWidget(file: file);
                       },
                       childCount: loadedState.images.length,
                     ),
